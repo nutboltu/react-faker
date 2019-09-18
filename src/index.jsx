@@ -2,6 +2,12 @@ import React from 'react';
 import Draggable from 'react-draggable';
 import fetchMock from 'fetch-mock';
 
+// TODOS:
+// 1. Text Field, Form UI
+// 2. Support XMLHttpRequest. Currently only support fetch
+// 3. Supports initial mock json
+// 4. Checkbox for skip faking
+
 const makeFakeApi = (apiList) => {
     fetchMock.restore();
     Object.keys(apiList).forEach((key) => {
