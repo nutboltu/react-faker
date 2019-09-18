@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactFaker from '../index';
+import ReactFaker from '../components/index';
 
 class App extends React.PureComponent {
     state = {
