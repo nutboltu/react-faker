@@ -6,26 +6,23 @@ class App extends React.PureComponent {
         list: [],
     };
 
-    getData = () => {
-        fetch('https://jsonplaceholder.typicode.com/todos/1', {
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            method: 'GET'
-        })
-        .then((response) => {
-               return response.json();
-        })
-        .then((item) => {
-             this.setState(prevState => {
-                 const newList = [... prevState.list, item];
-                 return { list: newList }; 
-             });
-        })
-        .catch(error => {
-           console.log(error); 
-        });
+    getData = async () => {
+        try {
+            const response = await fetch('https://jsonplaceholder.typicode.com/todos/1', {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                method: 'GET'
+            });
+            const item = await response.json();
+            this.setState(prevState => {
+                const newList = [... prevState.list, item];
+                return { list: newList }; 
+            });
+        } catch(err) {
+            console.log(error); 
+        }
     }
 
     onClick = () => {
