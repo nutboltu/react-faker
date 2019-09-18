@@ -1,5 +1,7 @@
 import fetchMock from 'fetch-mock';
 
+const delay = (second = 0) =>  new Promise((res, rej) => setTimeout(res, second * 1000));
+
 export const makeFakeApi = (apiList) => {
   fetchMock.restore();
   Object.keys(apiList).forEach((key) => {

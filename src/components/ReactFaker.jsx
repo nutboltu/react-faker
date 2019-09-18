@@ -1,8 +1,7 @@
 import React from 'react';
 import Draggable from 'react-draggable';
 import { makeFakeApi, clearApis } from '../utils/fakeApis';
-import TextField from './TextField';
-import Select from './Select';
+import { TextField, RangeField, Select } from './Inputs';
 import ApiItem from './ApiItem';
 
 // TODOS:
@@ -38,8 +37,12 @@ class ReactFaker extends React.PureComponent {
       this.methodRef = React.createRef();
       this.statusRef = React.createRef();
     }
-    onAdd = () => {        
+    onAdd = () => {   
+      if (!this.urlRef.current.value&& !this.responseRef.current.value) {
+        return;
+      }     
         this.setState(prevState => {
+
             const newApi = {
                 url: this.urlRef.current.value,
                 response: this.responseRef.current.value,
@@ -48,6 +51,7 @@ class ReactFaker extends React.PureComponent {
             };
 
             const newList = { ...prevState.apiList, [newApi.url]: newApi};
+
             makeFakeApi(newList);
             this.urlRef.current.value = '';
             this.responseRef.current.value = '';
@@ -87,6 +91,7 @@ class ReactFaker extends React.PureComponent {
       
                       <button onClick={this.onAdd}> Add </button>
                       <button onClick={this.onClear}> Clear </button>
+                      <RangeField  label="Latency"  />
                   </div>
                   <div>
                       {
