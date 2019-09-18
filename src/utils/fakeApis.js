@@ -7,12 +7,11 @@ export const makeFakeApi = (apiList) => {
   Object.keys(apiList).forEach((key) => {
     const api = apiList[key];
     fetchMock.mock(api.url,
-      // () => ({userId: 1,id: 1,title: 'mor',completed: true}),
       () => {  
         if (api.status === '200') {
-          return {userId: 1,id: 1,title: 'mor',completed: true};
+          return api.response;
         } else {
-          throw new Error('a') ;
+          throw new Error('Network Error') ;
         }
       },
       {

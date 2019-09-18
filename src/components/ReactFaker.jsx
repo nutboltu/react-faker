@@ -1,13 +1,13 @@
 import React from 'react';
 import Draggable from 'react-draggable';
 import { makeFakeApi, clearApis } from '../utils/fakeApis';
+import { mapInitialFakeApis } from '../utils/mapInitialApis';
 import { TextField, RangeField, Select } from './Inputs';
 import ApiItem from './ApiItem';
 
 // TODOS:
 // 1. Support XMLHttpRequest. Currently only support fetch
-// 2. Supports initial mock json
-// 3. Checkbox for skip faking
+// 2. Checkbox for skip faking
 
 const containerStyle = {
   top: 20,
@@ -26,16 +26,23 @@ const toggleButtonStyle = {
   right: '5px',
 }
 class ReactFaker extends React.PureComponent {
-    state = {
-        apiList: {},
-        showFaker: true,
-    };
     constructor(props) {
       super(props);
       this.urlRef = React.createRef();
       this.responseRef = React.createRef();
       this.methodRef = React.createRef();
       this.statusRef = React.createRef();
+      const { initialFakeApis } = this.props;
+      this.state = {
+        apiList: mapInitialFakeApis(initialFakeApis),
+        showFaker: true,
+      }
+    }
+
+    componentDidMount() {
+       if(Object.keys(this.state.apiList).length) {
+         makeFakeApi(this.state.apiList);
+       }
     }
     onAdd = () => {   
       if (!this.urlRef.current.value&& !this.responseRef.current.value) {

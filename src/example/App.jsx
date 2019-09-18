@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactFaker from '../components/index';
+import mockData from './mock.json';
 
 class App extends React.PureComponent {
     state = {
@@ -47,7 +48,7 @@ class App extends React.PureComponent {
                         ))
                     }
                 </div>
-                <ReactFaker />
+                <ReactFaker initialFakeApis={mockData} />
             </>
         );
     }
