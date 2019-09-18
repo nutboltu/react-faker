@@ -6,6 +6,9 @@ export const makeFakeApi = (apiList) => {
   fetchMock.restore();
   Object.keys(apiList).forEach((key) => {
     const api = apiList[key];
+    if (api.skip) {
+      return;
+    }
     fetchMock.mock(api.url,
       () => {  
         if (api.status === '200') {

@@ -55,6 +55,7 @@ class ReactFaker extends React.PureComponent {
                 response: this.responseRef.current.value,
                 method: this.methodRef.current.options[this.methodRef.current.selectedIndex].value,
                 status: this.statusRef.current.options[this.statusRef.current.selectedIndex].value,
+                skip: false,
             };
 
             const newList = { ...prevState.apiList, [newApi.url]: newApi};
@@ -71,6 +72,21 @@ class ReactFaker extends React.PureComponent {
         this.setState({ apiList: [] });
     }
 
+    onSkip = (url) => {
+      const updatedApi = {
+        ...this.state.apiList[url],
+        skip: !this.state.apiList[url].skip,
+      };
+
+      this.setState(prevState => {
+        const newList =  {
+          ...prevState.apiList,
+          [url]: updatedApi,
+        };
+        makeFakeApi(newList);
+        return { apiList: newList};
+      })
+    }
     renderToggleButton = () => {
       const buttonText  = this.state.showFaker ? 'Hide Faker' : 'Show Faker';
       return (
@@ -103,7 +119,7 @@ class ReactFaker extends React.PureComponent {
                   <div>
                       {
                           Object.keys(this.state.apiList).map((key, index) => (
-                          <ApiItem  {...this.state.apiList[key]} key={index}/>))
+                          <ApiItem  {...this.state.apiList[key]} key={index} onSkip={this.onSkip} />))
                       }
                   </div>
 

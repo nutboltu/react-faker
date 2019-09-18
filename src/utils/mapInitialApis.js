@@ -3,7 +3,10 @@ export const mapInitialFakeApis = (apis) => {
     return {};
   }
   return apis.reduce((acc, cur) => {
-    acc[cur.url] = cur;
+    acc[cur.url] = {
+      ...cur,
+      skip: false,
+    };
     return acc;
   }, {});
 }
