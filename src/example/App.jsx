@@ -13,15 +13,18 @@ class App extends React.PureComponent {
                 'Content-Type': 'application/json',
             },
             method: 'GET'
-        }).then((response) => {
-               return response.json(); 
-        }).then(item => {
-            // const item = response.json();
-            console.log(item);
-            this.setState(prevState => {
-                const newList = [... prevState.list, item];
-                return { list: newList }; 
-            });
+        })
+        .then((response) => {
+               return response.json();
+        })
+        .then((item) => {
+             this.setState(prevState => {
+                 const newList = [... prevState.list, item];
+                 return { list: newList }; 
+             });
+        })
+        .catch(error => {
+           console.log(error); 
         });
     }
 
