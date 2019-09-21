@@ -7,12 +7,10 @@ const ApiItem = ({
   skip,
   onSkip,
 }) => (
-  <details >
-      <summary>{url}</summary>
-
-        {method} {status}
-        <input type="checkbox" checked={!skip} onChange={() => onSkip(url)}/>
-  </details>
+  <div>
+     <div>{url}</div>
+     <div><input type="checkbox" checked={!skip} onChange={() => onSkip(url)}/></div>
+  </div>
 );
 
 export default ApiItem;

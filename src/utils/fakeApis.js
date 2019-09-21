@@ -14,7 +14,7 @@ export const makeFakeApi = (apiList) => {
         if (api.status === '200') {
           return api.response;
         } else {
-          throw new Error('Network Error') ;
+          throw new Error({ error: 'Network Error'}) ;
         }
       },
       {
