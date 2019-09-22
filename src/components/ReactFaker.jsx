@@ -2,7 +2,7 @@ import React from 'react';
 import Draggable from 'react-draggable';
 import { makeFakeApi, clearApis } from '../utils/fakeApis';
 import { mapInitialFakeApis } from '../utils/mapInitialApis';
-import { TextField, RangeField, Select } from './Inputs';
+import { TextField, RangeField, Select, Button } from './Inputs';
 import ApiItem from './ApiItem';
 
 // TODOS:
@@ -17,14 +17,24 @@ const containerStyle = {
   minHeight: '10px',
   padding: '10px',
   borderRadius: '5px',
-  boxShadow: '4px 4px 25px 0px rgba(145,142,145,1)'
+  boxShadow: '4px 4px 25px 0px rgba(145,142,145,1)',
+  fontFamily: 'sans-serif',
 }
 
 const toggleButtonStyle = {
   position: 'absolute',
   top: '5px',
   right: '5px',
+  padding: '5px',
+  margin: 0,
+  fontSize: '10px',
 }
+
+const btnGroupStyle = {
+  display: 'flex',
+  justifyContent: 'flex-end',
+}
+
 class ReactFaker extends React.PureComponent {
     constructor(props) {
       super(props);
@@ -88,14 +98,13 @@ class ReactFaker extends React.PureComponent {
       })
     }
     renderToggleButton = () => {
-      const buttonText  = this.state.showFaker ? 'Hide Faker' : 'Show Faker';
+      const buttonText  = this.state.showFaker ? 'Hide' : 'Show';
       return (
-          <button
+          <Button
             style={toggleButtonStyle}
             onClick={() => this.setState(prevState => ({ showFaker: !prevState.showFaker}))}
-          >
-            {buttonText}
-          </button>
+            text={buttonText}
+          />
       );
     }
     render() {
@@ -111,9 +120,10 @@ class ReactFaker extends React.PureComponent {
                       <TextField  label="Response"  innerRef={this.responseRef} multiline />
                       <Select label="Method" innerRef={this.methodRef} options={['GET', 'POST']}/>
                       <Select label="Status" innerRef={this.statusRef} options={['200', '404']}/>
-      
-                      <button onClick={this.onAdd}> Add </button>
-                      <button onClick={this.onClear}> Clear </button>
+                      <div style={btnGroupStyle}>
+                        <Button onClick={this.onAdd} text="Add" />
+                        <Button btnStyle="danger" onClick={this.onClear} text="Clear" />
+                      </div>
                       <RangeField  label="Latency"  />
                   </div>
                   <div>

@@ -13,10 +13,14 @@ const labelStyle = {
 
 const inputStyle = {
   padding: '5px',
+  border: '1px solid #ddd',
+  borderRadius: '5px',
 }
 
 const textAreaStyle = {
+  ...inputStyle,
   minHeight: '60px',
+  resize: 'none',
 }
 
 export const TextField = ({
@@ -61,3 +65,38 @@ export const Select = ({
 </div>);
 
 
+const buttonStyle = {
+  color: 'white',
+  margin: '5px',
+  border: 'none',
+  padding: '5px 10px',
+  borderRadius: '2px',
+  fontSize: '12px',
+  maxHeight: '35px',
+}
+
+const primaryBtnStyle = {
+  background: '#527dc3',
+}
+
+const dangerBtnStyle = {
+  background: '#E91E63',
+}
+
+export const Button = ({
+  btnStyle='primary',
+  onClick,
+  text,
+  style
+}) => (
+    <button
+      onClick={onClick}
+      style={{
+        ...buttonStyle,
+        ...( btnStyle === 'primary' ? primaryBtnStyle : dangerBtnStyle),
+        ...style,
+      }}
+    >
+      {text}
+    </button>
+)

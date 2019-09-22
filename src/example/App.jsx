@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactFaker from '../components/index';
 import mockData from './mock.json';
+// import Faker from '../utils/Faker';
 
 class App extends React.PureComponent {
     state = {
@@ -16,6 +17,7 @@ class App extends React.PureComponent {
                 },
                 method: 'GET'
             });
+            console.log(response);
             const item = await response.json();
             this.setState(prevState => {
                 const newList = [... prevState.list, item];
