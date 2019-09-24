@@ -3,7 +3,7 @@ import Draggable from 'react-draggable';
 import { makeFakeApi, clearApis } from '../utils/fakeApis';
 import { mapInitialFakeApis } from '../utils/mapInitialApis';
 import { TextField, RangeField, Select, Button } from './Inputs';
-import ApiItem from './ApiItem';
+import List from './List';
 
 // TODOS:
 // 1. Support XMLHttpRequest. Currently only support fetch
@@ -126,12 +126,13 @@ class ReactFaker extends React.PureComponent {
                       </div>
                       <RangeField  label="Latency"  />
                   </div>
-                  <div>
+                  <List items={Object.values(this.state.apiList)} onSkip={this.onSkip} />
+                  {/* <div>
                       {
                           Object.keys(this.state.apiList).map((key, index) => (
                           <ApiItem  {...this.state.apiList[key]} key={index} onSkip={this.onSkip} />))
                       }
-                  </div>
+                  </div> */}
 
                   </div>
                   : null
