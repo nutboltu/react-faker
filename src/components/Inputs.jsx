@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const fieldStyle = {
   display: 'flex',
@@ -27,8 +28,6 @@ export const TextField = ({
   label,
   innerRef,
   multiline = false,
-  min,
-  max,
 }) => (<div style={fieldStyle}>
     <label style={labelStyle}>{label}</label>
     {
@@ -37,6 +36,12 @@ export const TextField = ({
         : <input  type="text" ref={innerRef} style={inputStyle} />
     }
 </div>);
+
+TextField.propTypes = {
+  label: PropTypes.string,
+  innerRef: PropTypes.node,
+  multiline: PropTypes.bool,
+};
 
 export const RangeField = ({
   label,
@@ -47,6 +52,14 @@ export const RangeField = ({
     <label style={labelStyle}>{label}</label>
     <input  type="range" ref={innerRef}  min={min} max={max} />
 </div>);
+
+RangeField.propTypes = {
+  label: PropTypes.string,
+  innerRef: PropTypes.node,
+  multiline: PropTypes.bool,
+  min: PropTypes.number,
+  max: PropTypes.number,
+};
 
 
 export const Select = ({
@@ -64,6 +77,11 @@ export const Select = ({
     </select>
 </div>);
 
+Select.propTypes = {
+  label: PropTypes.string,
+  innerRef: PropTypes.node,
+  options: PropTypes.array,
+}
 
 const buttonStyle = {
   color: 'white',
@@ -99,4 +117,11 @@ export const Button = ({
     >
       {text}
     </button>
-)
+);
+
+Button.propTypes = {
+  btnStyle: PropTypes.string,
+  onClick: PropTypes.func,
+  text: PropTypes.string,
+  style: PropTypes.string,
+}
