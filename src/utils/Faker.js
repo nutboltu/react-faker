@@ -3,8 +3,8 @@ class Faker {
         self.realFetch = self.fetch;
         self.fetch = this.mockFetch;
     }
-    mockFetch = function(url, options)  {
-        return new Promise(function (resolve, reject) {
+    mockFetch = function()  {
+        return new Promise(function (resolve) {
             resolve({ hello: 'world' });
         });
     }
