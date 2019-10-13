@@ -7,7 +7,7 @@ import List from './List';
 
 // TODOS:
 // 1. Support XMLHttpRequest. Currently only support fetch
-// 2. Checkbox for skip faking
+// 2. Remove Fetch mock
 
 const containerStyle = {
   top: 20,
