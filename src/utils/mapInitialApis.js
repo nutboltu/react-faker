@@ -1,4 +1,4 @@
-export const mapInitialFakeApis = (apis) => {
+export const mapInitialFakeApis = apis => {
   if (!Array.isArray(apis)) {
     return {};
   }
@@ -9,4 +9,4 @@ export const mapInitialFakeApis = (apis) => {
     };
     return acc;
   }, {});
-}
+};
