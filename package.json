@@ -2,6 +2,11 @@
   "name": "react-faker",
   "version": "1.0.0",
   "description": "Runtime mocking API for react component",
+  "engines": {
+    "node": "^10.16.0",
+    "yarn": "^1.17.3"
+
+  },
   "main": "dist/index.js",
   "scripts": {
     "start": "webpack-dev-server",
