@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef , useState, useEffect } from 'react';
 import Draggable from 'react-draggable';
 import { makeFakeApi, clearApis } from '../utils/fakeApis';
 import { mapInitialFakeApis } from '../utils/mapInitialApis';
@@ -35,105 +35,98 @@ const btnGroupStyle = {
   justifyContent: 'flex-end',
 }
 
-class ReactFaker extends React.PureComponent {
-    constructor(props) {
-      super(props);
-      this.urlRef = React.createRef();
-      this.responseRef = React.createRef();
-      this.methodRef = React.createRef();
-      this.statusRef = React.createRef();
-      const { initialFakeApis } = this.props;
-      this.state = {
-        apiList: mapInitialFakeApis(initialFakeApis),
-        showFaker: true,
-      }
-    }
+const ReactFaker = ({ initialFakeApis }) =>  {
+  const urlRef = useRef();
+  const responseRef = useRef();
+  const methodRef = useRef();
+  const statusRef = useRef();
+  const [apiList, setApiList] = useState(mapInitialFakeApis(initialFakeApis));
+  const [showFaker, setShowFaker] = useState(true);
 
-    componentDidMount() {
-       if(Object.keys(this.state.apiList).length) {
-         makeFakeApi(this.state.apiList);
-       }
+  useEffect(() => {
+    if(Object.keys(apiList).length) {
+      makeFakeApi(apiList);
     }
-    onAdd = () => {   
-      if (!this.urlRef.current.value&& !this.responseRef.current.value) {
+  }, [apiList]);
+
+    const onAdd = () => {   
+      if (!urlRef.current.value && !responseRef.current.value) {
         return;
       }     
-        this.setState(prevState => {
+      setApiList(prevApiList => {
 
             const newApi = {
-                url: this.urlRef.current.value,
-                response: this.responseRef.current.value,
-                method: this.methodRef.current.options[this.methodRef.current.selectedIndex].value,
-                status: this.statusRef.current.options[this.statusRef.current.selectedIndex].value,
+                url: urlRef.current.value,
+                response: responseRef.current.value,
+                method: methodRef.current.options[methodRef.current.selectedIndex].value,
+                status: statusRef.current.options[statusRef.current.selectedIndex].value,
                 skip: false,
             };
 
-            const newList = { ...prevState.apiList, [newApi.url]: newApi};
+            const newList = { ...prevApiList, [newApi.url]: newApi};
 
-            makeFakeApi(newList);
-            this.urlRef.current.value = '';
-            this.responseRef.current.value = '';
-            return { apiList: newList };
+            urlRef.current.value = '';
+            responseRef.current.value = '';
+            return newList;
         });
     }
   
-    onClear = () => {
+    const onClear = () => {
       clearApis();
-        this.setState({ apiList: [] });
+      setApiList([]);
     }
 
-    onSkip = (url) => {
+    const onSkip = (url) => {
       const updatedApi = {
-        ...this.state.apiList[url],
-        skip: !this.state.apiList[url].skip,
+        ...apiList[url],
+        skip: !apiList[url].skip,
       };
 
-      this.setState(prevState => {
+      setApiList(prevApiList => {
         const newList =  {
-          ...prevState.apiList,
+          ...prevApiList,
           [url]: updatedApi,
         };
-        makeFakeApi(newList);
-        return { apiList: newList};
+        return newList;
       })
     }
-    renderToggleButton = () => {
-      const buttonText  = this.state.showFaker ? 'Hide' : 'Show';
+  
+    const renderToggleButton = () => {
+      const buttonText  = showFaker ? 'Hide' : 'Show';
       return (
           <Button
             style={toggleButtonStyle}
-            onClick={() => this.setState(prevState => ({ showFaker: !prevState.showFaker}))}
+            onClick={() => setShowFaker(prevShowFaker => !prevShowFaker)}
             text={buttonText}
           />
       );
     }
-    render() {
-      return (
-        <Draggable cancel="input" enableUserSelectHack={false}>
-             <div style={containerStyle}>
-              {this.renderToggleButton()}
-              {
-                  this.state.showFaker ?
+    
+    return (
+      <Draggable cancel="input" enableUserSelectHack={false}>
+           <div style={containerStyle}>
+            {renderToggleButton()}
+            {
+                showFaker ?
+                <div>
                   <div>
-                    <div>
-                      <TextField  label="URL"  innerRef={this.urlRef} />
-                      <TextField  label="Response"  innerRef={this.responseRef} multiline />
-                      <Select label="Method" innerRef={this.methodRef} options={['GET', 'POST']}/>
-                      <Select label="Status" innerRef={this.statusRef} options={['200', '404']}/>
-                      <div style={btnGroupStyle}>
-                        <Button onClick={this.onAdd} text="Add" />
-                        <Button btnStyle="danger" onClick={this.onClear} text="Clear" />
-                      </div>
-                      <RangeField  label="Latency"  />
-                  </div>
-                  <List items={Object.values(this.state.apiList)} onSkip={this.onSkip} />
-                  </div>
-                  : null
-              }
-             </div> 
-        </Draggable>
-      );
-    }
+                    <TextField  label="URL"  innerRef={urlRef} />
+                    <TextField  label="Response"  innerRef={responseRef} multiline />
+                    <Select label="Method" innerRef={methodRef} options={['GET', 'POST']}/>
+                    <Select label="Status" innerRef={statusRef} options={['200', '404']}/>
+                    <div style={btnGroupStyle}>
+                      <Button onClick={onAdd} text="Add" />
+                      <Button btnStyle="danger" onClick={onClear} text="Clear" />
+                    </div>
+                    <RangeField  label="Latency"  />
+                </div>
+                <List items={Object.values(apiList)} onSkip={onSkip} />
+                </div>
+                : null
+            }
+           </div> 
+      </Draggable>
+    );
   }
 
   export default ReactFaker;

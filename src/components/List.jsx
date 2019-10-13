@@ -35,8 +35,8 @@ const List = ({
       </thead>
       <tbody>
       {
-          items.map(({url, method, status, skip}) => (
-            <tr>
+          items.map(({url, method, skip}, index) => (
+            <tr key={index}>
               <td style={tdStyle}><input type="checkbox" checked={!skip} onChange={() => onSkip(url)}/></td>
               <td style={tdStyle}>{url}</td>
               <td style={tdStyle}>{method}</td>
@@ -47,4 +47,5 @@ const List = ({
     </table>
   )
 }
+
 export default List;
