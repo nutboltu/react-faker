@@ -1,6 +1,6 @@
 {
   "name": "react-faker",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Runtime mocking API for react component",
   "engines": {
     "node": "^10.16.0",
