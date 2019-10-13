@@ -7,7 +7,7 @@ import List from './List';
 
 // TODOS:
 // 1. Support XMLHttpRequest. Currently only support fetch
-// 2. Checkbox for skip faking
+// 2. Remove Fetch mock
 
 const containerStyle = {
   top: 20,
@@ -127,13 +127,6 @@ class ReactFaker extends React.PureComponent {
                       <RangeField  label="Latency"  />
                   </div>
                   <List items={Object.values(this.state.apiList)} onSkip={this.onSkip} />
-                  {/* <div>
-                      {
-                          Object.keys(this.state.apiList).map((key, index) => (
-                          <ApiItem  {...this.state.apiList[key]} key={index} onSkip={this.onSkip} />))
-                      }
-                  </div> */}
-
                   </div>
                   : null
               }
