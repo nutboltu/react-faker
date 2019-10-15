@@ -1,4 +1,5 @@
 const path = require('path');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
   mode: 'production',
@@ -24,10 +25,6 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-  ],
-  externals: [
-    'react',
-    'react-dom',
-  ],
+  plugins: [new BundleAnalyzerPlugin()],
+  externals: ['react', 'react-dom'],
 };
