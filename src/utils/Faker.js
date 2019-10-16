@@ -1,12 +1,29 @@
 class Faker {
-  constructor() {
+  constructor(apiList) {
     self.realFetch = self.fetch;
     self.fetch = this.mockFetch;
+    this.apiList = apiList;
   }
-  mockFetch = function() {
-    return new Promise(function(resolve) {
-      resolve({ hello: 'world' });
-    });
+
+  add = api => {
+    this.apiList.push(api);
+  };
+
+  matchMock = () => {
+    return false;
+  };
+
+  mockFetch = (req, options) => {
+    if (this.matchMock()) {
+      return new Promise(function(resolve) {
+        resolve({ hello: 'world' });
+      });
+    }
+    return self.realFetch(req, options);
+  };
+
+  restore = () => {
+    this.apiList = [];
   };
 }
 
