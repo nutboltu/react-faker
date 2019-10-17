@@ -1,11 +1,12 @@
-[ {
-  "url": "https://jsonplaceholder.typicode.com/todos/1",
-  "response": {
+[
+  {
+    "url": "https://jsonplaceholder.typicode.com/todos/1",
+    "response": {
       "userId": 1,
-        "id": 1,
-        "title": "Initial mock data",
-        "completed": true
-        },
+      "id": 1,
+      "title": "Initial mock data",
+      "completed": true
+    },
     "method": "GET",
     "status": "200"
   }
