@@ -19,7 +19,7 @@ const containerStyle = {
   padding: '10px',
   borderRadius: '5px',
   boxShadow: '4px 4px 25px 0px rgba(145,142,145,1)',
-  fontFamily: 'sans-serif'
+  fontFamily: 'sans-serif',
 };
 
 const toggleButtonStyle = {
@@ -28,12 +28,12 @@ const toggleButtonStyle = {
   right: '5px',
   padding: '5px',
   margin: 0,
-  fontSize: '10px'
+  fontSize: '10px',
 };
 
 const btnGroupStyle = {
   display: 'flex',
-  justifyContent: 'flex-end'
+  justifyContent: 'flex-end',
 };
 
 const ReactFaker = ({ initialFakeApis }) => {
@@ -62,7 +62,7 @@ const ReactFaker = ({ initialFakeApis }) => {
           methodRef.current.options[methodRef.current.selectedIndex].value,
         status:
           statusRef.current.options[statusRef.current.selectedIndex].value,
-        skip: false
+        skip: false,
       };
 
       const newList = { ...prevApiList, [newApi.url]: newApi };
@@ -81,13 +81,13 @@ const ReactFaker = ({ initialFakeApis }) => {
   const onSkip = url => {
     const updatedApi = {
       ...apiList[url],
-      skip: !apiList[url].skip
+      skip: !apiList[url].skip,
     };
 
     setApiList(prevApiList => {
       const newList = {
         ...prevApiList,
-        [url]: updatedApi
+        [url]: updatedApi,
       };
       return newList;
     });
@@ -138,7 +138,7 @@ const ReactFaker = ({ initialFakeApis }) => {
 };
 
 ReactFaker.propTypes = {
-  initialFakeApis: PropTypes.array
+  initialFakeApis: PropTypes.array,
 };
 
 export default ReactFaker;

@@ -7,7 +7,7 @@
     "start": "webpack-dev-server",
     "build": "rm -rf dist/ && webpack -p --progress --config=webpack.production.config.js",
     "bundle:analyze": "rm -rf dist/ && webpack -p --progress --config=webpack.bundle.config.js",
-    "lint": "eslint  src",
+    "lint": "eslint  './src/**/*.js*'",
     "test": "echo \"Error: no test specified\" && exit 1",
     "ci": "npm run lint"
   },
