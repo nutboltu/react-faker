@@ -2,29 +2,60 @@ class Faker {
   constructor(apiList) {
     self.realFetch = self.fetch;
     self.fetch = this.mockFetch;
-    this.apiList = apiList;
+    this.apiList = apiList || {};
   }
 
+  getKey = (url, method) => `${url}_${method}`;
+
+  getApis = () => Object.values(this.apiList);
+
+  makeInitialApis = apis => {
+    if (!Array.isArray(apis)) {
+      this.apiList = {};
+    }
+    this.apiList = apis.reduce((acc, cur) => {
+      const key = this.getKey(cur.url, cur.method);
+      acc[key] = {
+        ...cur,
+        skip: false,
+      };
+      return acc;
+    }, {});
+  };
+
   add = api => {
-    this.apiList.push(api);
+    const key = this.getKey(api.url, api.method);
+    this.apiList[key] = api;
   };
 
-  matchMock = () => {
-    return false;
+  setSkip = (url, method) => {
+    const key = this.getKey(url, method);
+    console.log(this.apiList);
+    this.apiList[key].skip = !this.apiList[key].skip;
   };
 
-  mockFetch = (req, options) => {
-    if (this.matchMock()) {
+  matchMock = (url, method) => {
+    const key = this.getKey(url, method);
+    if (this.apiList[key] && !this.apiList[key].skip){
+      return this.apiList[key];
+    }
+    return null;
+  };
+
+  mockFetch = (url, options) => {
+    const { method } = options || {};
+    const matched = this.matchMock(url, method);
+    if (matched) {
       return new Promise(function(resolve) {
-        resolve({ hello: 'world' });
+        resolve(matched.response);
       });
     }
-    return self.realFetch(req, options);
+    return self.realFetch(url, options);
   };
 
   restore = () => {
-    this.apiList = [];
+    this.apiList = {};
   };
 }
 
-export default new Faker();
+export default Faker;
