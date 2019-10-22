@@ -37,7 +37,7 @@ export const TextField = ({ label, innerRef, multiline = false }) => (
 
 TextField.propTypes = {
   label: PropTypes.string,
-  innerRef: PropTypes.node,
+  innerRef: PropTypes.any,
   multiline: PropTypes.bool,
 };
 
@@ -71,7 +71,7 @@ export const Select = ({ label, innerRef, options = [] }) => (
 
 Select.propTypes = {
   label: PropTypes.string,
-  innerRef: PropTypes.node,
+  innerRef: PropTypes.any,
   options: PropTypes.array,
 };
 
@@ -110,5 +110,5 @@ Button.propTypes = {
   btnStyle: PropTypes.string,
   onClick: PropTypes.func,
   text: PropTypes.string,
-  style: PropTypes.string,
+  style: PropTypes.object,
 };

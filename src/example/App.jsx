@@ -16,7 +16,6 @@ const App = () => {
           method: 'GET',
         }
       );
-      console.log(response);
       const item = await response.json();
       setList(prevList => [...prevList, item]);
     } catch (err) {

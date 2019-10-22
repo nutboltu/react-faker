@@ -38,7 +38,7 @@ const List = ({ items = [], onSkip }) => {
               <input
                 type="checkbox"
                 checked={!skip}
-                onChange={() => onSkip(url)}
+                onChange={() => onSkip(url, method)}
               />
             </td>
             <td style={tdStyle}>{url}</td>

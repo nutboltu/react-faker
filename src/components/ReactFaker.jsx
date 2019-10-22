@@ -1,11 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Draggable from 'react-draggable';
-import { makeFakeApi, clearApis } from '../utils/fakeApis';
-import { mapInitialFakeApis } from '../utils/mapInitialApis';
 import { TextField, RangeField, Select, Button } from './Inputs';
 import List from './List';
-
+import Faker from '../utils/Faker';
 // TODOS:
 // 1. Support XMLHttpRequest. Currently only support fetch
 // 2. Remove Fetch mock
@@ -20,6 +18,7 @@ const containerStyle = {
   borderRadius: '5px',
   boxShadow: '4px 4px 25px 0px rgba(145,142,145,1)',
   fontFamily: 'sans-serif',
+  background: 'white',
 };
 
 const toggleButtonStyle = {
@@ -35,62 +34,46 @@ const btnGroupStyle = {
   display: 'flex',
   justifyContent: 'flex-end',
 };
+const faker = new Faker();
 
 const ReactFaker = ({ initialFakeApis }) => {
   const urlRef = useRef();
   const responseRef = useRef();
   const methodRef = useRef();
   const statusRef = useRef();
-  const [apiList, setApiList] = useState(mapInitialFakeApis(initialFakeApis));
+  const [apiList, setApiList] = useState([]);
   const [showFaker, setShowFaker] = useState(true);
 
   useEffect(() => {
-    if (Object.keys(apiList).length) {
-      makeFakeApi(apiList);
-    }
-  }, [apiList]);
+    faker.makeInitialApis(initialFakeApis);
+    setApiList(faker.getApis());
+  }, [initialFakeApis]);
 
   const onAdd = () => {
     if (!urlRef.current.value && !responseRef.current.value) {
       return;
     }
-    setApiList(prevApiList => {
-      const newApi = {
-        url: urlRef.current.value,
-        response: responseRef.current.value,
-        method:
-          methodRef.current.options[methodRef.current.selectedIndex].value,
-        status:
-          statusRef.current.options[statusRef.current.selectedIndex].value,
-        skip: false,
-      };
-
-      const newList = { ...prevApiList, [newApi.url]: newApi };
-
-      urlRef.current.value = '';
-      responseRef.current.value = '';
-      return newList;
-    });
+    const newApi = {
+      url: urlRef.current.value,
+      response: responseRef.current.value,
+      method: methodRef.current.options[methodRef.current.selectedIndex].value,
+      status: statusRef.current.options[statusRef.current.selectedIndex].value,
+      skip: false,
+    };
+    faker.add(newApi);
+    setApiList(faker.getApis());
+    urlRef.current.value = '';
+    responseRef.current.value = '';
   };
 
   const onClear = () => {
-    clearApis();
-    setApiList([]);
+    faker.restore();
+    setApiList(faker.getApis());
   };
 
-  const onSkip = url => {
-    const updatedApi = {
-      ...apiList[url],
-      skip: !apiList[url].skip,
-    };
-
-    setApiList(prevApiList => {
-      const newList = {
-        ...prevApiList,
-        [url]: updatedApi,
-      };
-      return newList;
-    });
+  const onSkip = (url, method) => {
+    faker.setSkip(url, method);
+    setApiList(faker.getApis());
   };
 
   const renderToggleButton = () => {
@@ -129,7 +112,7 @@ const ReactFaker = ({ initialFakeApis }) => {
               </div>
               <RangeField label="Latency" />
             </div>
-            <List items={Object.values(apiList)} onSkip={onSkip} />
+            <List items={apiList} onSkip={onSkip} />
           </div>
         ) : null}
       </div>

@@ -18,7 +18,7 @@
     "url": "git://github.com/nutboltu/react-faker.git"
   },
   "dependencies": {
-    "fetch-mock": "^7.5.1",
+    "@babel/runtime": "^7.6.3",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
@@ -27,6 +27,7 @@
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
     "babel-eslint": "^10.0.3",
