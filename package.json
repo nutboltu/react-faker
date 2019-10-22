@@ -1,6 +1,6 @@
 {
   "name": "react-faker",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Runtime mocking API for react component",
   "main": "dist/index.js",
   "scripts": {
