@@ -1,6 +1,6 @@
 {
   "name": "react-faker",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Runtime mocking API for react component",
   "main": "dist/index.js",
   "scripts": {
@@ -20,8 +20,6 @@
   "dependencies": {
     "@babel/runtime": "^7.6.3",
     "prop-types": "^15.7.2",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
     "react-draggable": "^4.0.3"
   },
   "devDependencies": {
@@ -44,5 +42,9 @@
     "webpack-bundle-analyzer": "^3.5.2",
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.2"
+  },
+  "peerDependencies": {
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2"
   }
 }
