@@ -1,3 +1,5 @@
+import responseBuilder from './responseBuilder';
+
 class Faker {
   constructor(apiList) {
     self.realFetch = self.fetch;
@@ -30,13 +32,12 @@ class Faker {
 
   setSkip = (url, method) => {
     const key = this.getKey(url, method);
-    console.log(this.apiList);
     this.apiList[key].skip = !this.apiList[key].skip;
   };
 
   matchMock = (url, method) => {
     const key = this.getKey(url, method);
-    if (this.apiList[key] && !this.apiList[key].skip){
+    if (this.apiList[key] && !this.apiList[key].skip) {
       return this.apiList[key];
     }
     return null;
@@ -47,7 +48,12 @@ class Faker {
     const matched = this.matchMock(url, method);
     if (matched) {
       return new Promise(function(resolve) {
-        resolve(matched.response);
+        const response = responseBuilder(
+          url,
+          matched.status || 200,
+          matched.response
+        );
+        resolve(response);
       });
     }
     return self.realFetch(url, options);

@@ -1,8 +1,6 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Draggable from 'react-draggable';
-// import { makeFakeApi, clearApis } from '../utils/fakeApis';
-// import { mapInitialFakeApis } from '../utils/mapInitialApis';
 import { TextField, RangeField, Select, Button } from './Inputs';
 import List from './List';
 import Faker from '../utils/Faker';
