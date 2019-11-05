@@ -1,25 +1,5 @@
-import React from "react";
-import Proptypes from "prop-types";
-
-const tdStyle = {
-  border: "1px solid #ddd",
-  overflow: "hidden",
-  textOverflow: "ellipsis",
-  padding: "12px 5px"
-};
-
-const headThStyle = {
-  paddingTop: "12px",
-  paddingBottom: "12px",
-  textAlign: "left",
-  backgroundColor: "#527dc3",
-  color: "white",
-  border: "1px solid #ddd"
-};
-
-const tableStyle = {
-  borderCollapse: "collapse"
-};
+import React from 'react';
+import Proptypes from 'prop-types';
 
 const List = ({ items = [], onSkip }) => {
   return (
@@ -51,7 +31,7 @@ const List = ({ items = [], onSkip }) => {
 
 List.propTypes = {
   items: Proptypes.array,
-  onSkip: Proptypes.func
+  onSkip: Proptypes.func,
 };
 
 export default List;

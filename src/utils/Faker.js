@@ -1,13 +1,19 @@
 import responseBuilder from './responseBuilder';
+import { newMockXhr } from 'mock-xmlhttprequest';
 
 class Faker {
   constructor(apiList) {
+    this.MockXhr = newMockXhr();
+    this.MockXhr.onSend = this.mockXhrRequest;
     self.realFetch = self.fetch;
+    self.realXMLHttpRequest = self.XMLHttpRequest;
+
     self.fetch = this.mockFetch;
+    self.XMLHttpRequest = this.MockXhr;
     this.apiList = apiList || {};
   }
 
-  getKey = (url, method) => `${url}_${method}`;
+  getKey = (url, method) => `${url}_${method.toLowerCase()}`;
 
   getApis = () => Object.values(this.apiList);
 
@@ -57,6 +63,26 @@ class Faker {
       });
     }
     return self.realFetch(url, options);
+  };
+
+  mockXhrRequest = xhr => {
+    const { method, url } = xhr;
+    const matched = this.matchMock(url, method);
+    if (matched) {
+      xhr.respond(matched.status || 200, {}, matched.response);
+    } else {
+      let realXhr = new self.realXMLHttpRequest();
+      realXhr.onreadystatechange = function() {
+        if (realXhr.readyState == 4 && realXhr.status == 200) {
+          xhr.respond(200, {}, this.responseText);
+        }
+      };
+      realXhr.open(method, url);
+      realXhr.send();
+      realXhr.onerror = function() {
+        return 'Request failed';
+      };
+    }
   };
 
   restore = () => {

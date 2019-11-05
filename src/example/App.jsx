@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactFaker from '../components/index';
 import mockData from './mock.json';
+import axios from 'axios';
 
 const App = () => {
   const [list, setList] = useState([]);
@@ -23,10 +24,23 @@ const App = () => {
     }
   };
 
+  const getXhrData = async () => {
+    try {
+      const { data } = await axios.get(
+        'https://jsonplaceholder.typicode.com/todos/1'
+      );
+      setList(prevList => [...prevList, data]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <span>Hello App</span>
-      <button onClick={getData}>Get Data</button>
+      <button onClick={getData}>Get Fetch Data</button>
+      <button onClick={getXhrData}>Get Xhr Data</button>
+
       <div>
         <ul>
           <li>Title</li>
