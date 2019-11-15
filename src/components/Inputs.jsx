@@ -41,21 +41,6 @@ TextField.propTypes = {
   multiline: PropTypes.bool,
 };
 
-export const RangeField = ({ label, innerRef, min = 0, max = 3 }) => (
-  <div style={fieldStyle}>
-    <label style={labelStyle}>{label}</label>
-    <input type="range" ref={innerRef} min={min} max={max} />
-  </div>
-);
-
-RangeField.propTypes = {
-  label: PropTypes.string,
-  innerRef: PropTypes.node,
-  multiline: PropTypes.bool,
-  min: PropTypes.number,
-  max: PropTypes.number,
-};
-
 export const Select = ({ label, innerRef, options = [] }) => (
   <div style={fieldStyle}>
     <label style={labelStyle}>{label}</label>

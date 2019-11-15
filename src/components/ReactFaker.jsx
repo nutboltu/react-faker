@@ -4,9 +4,6 @@ import Draggable from 'react-draggable';
 import { TextField, RangeField, Select, Button } from './Inputs';
 import List from './List';
 import Faker from '../utils/Faker';
-// TODOS:
-// 1. Support XMLHttpRequest. Currently only support fetch
-// 2. Remove Fetch mock
 
 const containerStyle = {
   top: 20,
@@ -110,7 +107,6 @@ const ReactFaker = ({ initialFakeApis }) => {
                 <Button onClick={onAdd} text="Add" />
                 <Button btnStyle="danger" onClick={onClear} text="Clear" />
               </div>
-              <RangeField label="Latency" />
             </div>
             <List items={apiList} onSkip={onSkip} />
           </div>
